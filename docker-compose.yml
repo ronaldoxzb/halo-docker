@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.5'
 
 networks: 
     backend:
@@ -16,11 +16,14 @@ services:
         ]
         environment:
             MYSQL_ROOT_PASSWORD: example
+        ports:
+            - 3306:3306
         volumes:
             - ./mysql:/var/lib/mysql
             - ./init:/docker-entrypoint-initdb.d/
         networks: 
             - backend
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # 执行的命令
 
 ### Halo ###
     halo:
@@ -52,7 +55,5 @@ services:
             - ./nginx/ssls:/etc/nginx/ssls
         links:
             - halo
-        
-        
 
 
